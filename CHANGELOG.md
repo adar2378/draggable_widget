@@ -1,3 +1,4 @@
-## [0.0.1] - TODO: Add release date.
+## [1.0.0] - First release.
 
-* TODO: Describe initial release.
+* Added basic functionality.
+* Added example app
