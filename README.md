@@ -2,13 +2,15 @@
   <img width="256"  src="https://github.com/adar2378/draggable_widget/raw/master/demo/logo.png">
 </p>
 
+<a href = "https://img.shields.io/pub/v/draggable_widget"><img src="https://img.shields.io/pub/v/draggable_widget"></a>
+
 A flutter package which will help you to create a draggable widget that can be dragged around the screen.
 
 ## Demo 
 <img src="https://github.com/adar2378/draggable_widget/raw/master/demo/demo.gif" height="480">
 
 
-<a href = "https://img.shields.io/pub/v/draggable_widget"><img src="https://img.shields.io/pub/v/draggable_widget"></a>
+
 
 ## Features 💚
 
