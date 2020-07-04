@@ -4,6 +4,8 @@
 
 A flutter package which will help you to create a draggable widget that can be dragged around the screen.
 
+## Demo 
+<img src="https://github.com/adar2378/draggable_widget/raw/master/demo/demo.gif" height="480">
 
 ## Features 💚
 
