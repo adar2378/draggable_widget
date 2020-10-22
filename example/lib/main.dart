@@ -85,6 +85,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                   child: Text("Move to Bottom Left"),
                 ),
+                FlatButton(
+                  onPressed: () {
+                    dragController.jumpTo(AnchoringPosition.center);
+                  },
+                  child: Text("Move to Center"),
+                ),
               ],
             ),
           ),
@@ -101,10 +107,14 @@ class _MyHomePageState extends State<MyHomePage> {
             shadowBorderRadius: 50,
             child: Container(
               height: 100,
-              width: 100,
+              width: 200,
               decoration: BoxDecoration(
-                shape: BoxShape.circle,
                 color: Colors.blue,
+              ),
+              child: Stack(
+                children: [
+                  IconButton(icon: Icon(Icons.close), onPressed: (){})
+                ],
               ),
             ),
             initialPosition: AnchoringPosition.bottomLeft,

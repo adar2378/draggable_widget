@@ -4,6 +4,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'model/anchor_docker.dart';
+import 'model/anchor_docker.dart';
+import 'model/anchor_docker.dart';
 
 export 'model/anchor_docker.dart';
 
@@ -64,6 +66,10 @@ class DraggableWidget extends StatefulWidget {
   /// How much should the [DraggableWidget] be scaled when it is being dragged, default to 1.1
   final double dragAnimationScale;
 
+
+  /// Touch Delay Duration. Default value is zero. When set, drag operations will trigger after the duration.
+  final Duration touchDelay;
+
   DraggableWidget({
     Key key,
     this.child,
@@ -77,6 +83,7 @@ class DraggableWidget extends StatefulWidget {
     this.shadowBorderRadius = 10,
     this.dragController,
     this.dragAnimationScale = 1.1,
+    this.touchDelay = Duration.zero,
     this.normalShadow = const BoxShadow(
       color: Colors.black38,
       offset: Offset(0, 4),
@@ -124,6 +131,8 @@ class _DraggableWidgetState extends State<DraggableWidget>
   bool visible;
 
   bool get currentVisibilty => visible ?? widget.intialVisibility;
+
+  bool isStillTouching;
 
   @override
   void initState() {
@@ -228,6 +237,11 @@ class _DraggableWidgetState extends State<DraggableWidget>
             ? Container()
             : Listener(
                 onPointerUp: (v) {
+                  if(!isStillTouching){
+                    return;
+                  }
+                  isStillTouching = false;
+
                   final p = v.position;
                   currentDocker = determineDocker(p.dx, p.dy);
                   setState(() {
@@ -239,7 +253,15 @@ class _DraggableWidgetState extends State<DraggableWidget>
                   animationController.reset();
                   animationController.forward();
                 },
-                onPointerMove: (v) {
+                onPointerDown: (v) async{
+                  isStillTouching = false;
+                  await Future.delayed(widget.touchDelay);
+                  isStillTouching = true;
+                },
+                onPointerMove: (v) async{
+                  if(!isStillTouching){
+                    return;
+                  }
                   if (animationController.isAnimating) {
                     animationController.stop();
                     animationController.reset();
@@ -357,6 +379,17 @@ class _DraggableWidgetState extends State<DraggableWidget>
               (animation.value) * remaingDistanceY +
               (widget.statusBarHeight * animation.value);
           currentlyDocked = AnchoringPosition.bottomRight;
+        });
+        break;
+      case AnchoringPosition.center:
+        double remaingDistanceX = (totalWidth/2 - (widgetWidth/2)) - hardLeft;
+        double remaingDistanceY = (totalHeight/2 - (widgetHeight/2)) - hardTop;
+        // double remaingDistanceX = (totalWidth - widgetWidth - hardLeft) / 2.0;
+        // double remaingDistanceY = (totalHeight - widgetHeight - hardTop) / 2.0;
+        setState(() {
+          left =(animation.value) * remaingDistanceX + hardLeft;
+          top = (animation.value) * remaingDistanceY + hardTop;
+          currentlyDocked = AnchoringPosition.center;
         });
         break;
       default:
