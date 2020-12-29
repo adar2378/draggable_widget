@@ -113,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               child: Stack(
                 children: [
-                  IconButton(icon: Icon(Icons.close), onPressed: (){})
+                  IconButton(icon: Icon(Icons.close), onPressed: () {})
                 ],
               ),
             ),

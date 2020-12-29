@@ -6,11 +6,9 @@
 
 A flutter package which will help you to create a draggable widget that can be dragged around the screen.
 
-## Demo 
+## Demo
+
 <img src="https://github.com/adar2378/draggable_widget/raw/master/demo/demo.gif" height="480">
-
-
-
 
 ## Features 💚
 
@@ -21,7 +19,7 @@ A flutter package which will help you to create a draggable widget that can be d
 
 ## Properties 🔖
 
-```Dart
+````Dart
 /// The widget that will be displayed as dragging widget
   final Widget child;
 
@@ -78,20 +76,22 @@ A flutter package which will help you to create a draggable widget that can be d
   /// How much should the [DraggableWidget] be scaled when it is being dragged, default to 1.1
   final double dragAnimationScale;
 
-```
+````
 
 **AnchoringPosition can be among these 4 types**
 
-``` Dart
+```Dart
 enum AnchoringPosition {
   topLeft,
   topRight,
   bottomLeft,
   bottomRight,
+  center
 }
 ```
 
 **How to use**
+
 ```Dart
 Stack(
     children:[
@@ -118,9 +118,10 @@ Stack(
 ```
 
 **DragController Fucntionality**
+
 ```Dart
 /// Jump to any [AnchoringPosition] programatically
-void jumpTo(AnchoringPosition anchoringPosition) 
+void jumpTo(AnchoringPosition anchoringPosition)
 
 /// Get the current screen [Offset] of the widget
 Offset getCurrentPosition()
@@ -129,7 +130,7 @@ Offset getCurrentPosition()
 void showWidget()
 
 /// Hide the widget
-void hideWidget() 
+void hideWidget()
 ```
 
 run the example app in the exmaple folder to find out more about how to use it.

@@ -4,8 +4,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'model/anchor_docker.dart';
-import 'model/anchor_docker.dart';
-import 'model/anchor_docker.dart';
 
 export 'model/anchor_docker.dart';
 
@@ -65,7 +63,6 @@ class DraggableWidget extends StatefulWidget {
 
   /// How much should the [DraggableWidget] be scaled when it is being dragged, default to 1.1
   final double dragAnimationScale;
-
 
   /// Touch Delay Duration. Default value is zero. When set, drag operations will trigger after the duration.
   final Duration touchDelay;
@@ -237,7 +234,7 @@ class _DraggableWidgetState extends State<DraggableWidget>
             ? Container()
             : Listener(
                 onPointerUp: (v) {
-                  if(!isStillTouching){
+                  if (!isStillTouching) {
                     return;
                   }
                   isStillTouching = false;
@@ -253,13 +250,13 @@ class _DraggableWidgetState extends State<DraggableWidget>
                   animationController.reset();
                   animationController.forward();
                 },
-                onPointerDown: (v) async{
+                onPointerDown: (v) async {
                   isStillTouching = false;
                   await Future.delayed(widget.touchDelay);
                   isStillTouching = true;
                 },
-                onPointerMove: (v) async{
-                  if(!isStillTouching){
+                onPointerMove: (v) async {
+                  if (!isStillTouching) {
                     return;
                   }
                   if (animationController.isAnimating) {
@@ -382,12 +379,14 @@ class _DraggableWidgetState extends State<DraggableWidget>
         });
         break;
       case AnchoringPosition.center:
-        double remaingDistanceX = (totalWidth/2 - (widgetWidth/2)) - hardLeft;
-        double remaingDistanceY = (totalHeight/2 - (widgetHeight/2)) - hardTop;
+        double remaingDistanceX =
+            (totalWidth / 2 - (widgetWidth / 2)) - hardLeft;
+        double remaingDistanceY =
+            (totalHeight / 2 - (widgetHeight / 2)) - hardTop;
         // double remaingDistanceX = (totalWidth - widgetWidth - hardLeft) / 2.0;
         // double remaingDistanceY = (totalHeight - widgetHeight - hardTop) / 2.0;
         setState(() {
-          left =(animation.value) * remaingDistanceX + hardLeft;
+          left = (animation.value) * remaingDistanceX + hardLeft;
           top = (animation.value) * remaingDistanceY + hardTop;
           currentlyDocked = AnchoringPosition.center;
         });
