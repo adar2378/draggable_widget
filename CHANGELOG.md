@@ -1,3 +1,5 @@
+## [1.1.1] - Updated documentation.
+
 ## [1.1.0] - Updated documentation.
 
 - Added `center` anchoring position, thanks to @dreampowder
