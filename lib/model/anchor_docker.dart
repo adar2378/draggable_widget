@@ -3,5 +3,5 @@ enum AnchoringPosition {
   topRight,
   bottomLeft,
   bottomRight,
-  center
+  center,
 }
