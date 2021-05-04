@@ -194,6 +194,12 @@ class _DraggableWidgetState extends State<DraggableWidget>
     });
     super.initState();
   }
+  
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
 
   @override
   void didUpdateWidget(DraggableWidget oldWidget) {
