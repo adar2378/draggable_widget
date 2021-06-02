@@ -13,7 +13,7 @@ class DraggableWidget extends StatefulWidget {
   final Widget child;
 
   /// The horizontal padding around the widget
-  final double horizontalSapce;
+  final double horizontalSpace;
 
   /// The vertical padding around the widget
   final double verticalSpace;
@@ -71,7 +71,7 @@ class DraggableWidget extends StatefulWidget {
   DraggableWidget({
     Key? key,
     required this.child,
-    this.horizontalSapce = 0,
+    this.horizontalSpace = 0,
     this.verticalSpace = 0,
     this.initialPosition = AnchoringPosition.bottomRight,
     this.intialVisibility = true,
@@ -93,7 +93,7 @@ class DraggableWidget extends StatefulWidget {
       blurRadius: 10,
     ),
   })  : assert(statusBarHeight >= 0),
-        assert(horizontalSapce >= 0),
+        assert(horizontalSpace >= 0),
         assert(verticalSpace >= 0),
         assert(bottomMargin >= 0),
         super(key: key);
@@ -288,7 +288,7 @@ class _DraggableWidgetState extends State<DraggableWidget>
                   child: Container(
                     key: key,
                     padding: EdgeInsets.symmetric(
-                      horizontal: widget.horizontalSapce,
+                      horizontal: widget.horizontalSpace,
                       vertical: widget.verticalSpace,
                     ),
                     child: AnimatedContainer(

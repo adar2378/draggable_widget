@@ -1,8 +1,8 @@
 <p align="center">
-  <img width="256"  src="https://github.com/adar2378/draggable_widget/raw/master/demo/logo.png">
+  <img width="256" src="https://github.com/adar2378/draggable_widget/raw/master/demo/logo.png">
 </p>
 
-<a href = "https://pub.dev/packages/draggable_widget"><img src="https://img.shields.io/pub/v/draggable_widget"></a>
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT) [![Version](https://img.shields.io/pub/v/draggable_widget)](https://pub.dev/packages/draggable_widget)
 
 A flutter package which will help you to create a draggable widget that can be dragged around the screen.
 
@@ -19,12 +19,12 @@ A flutter package which will help you to create a draggable widget that can be d
 
 ## Properties 🔖
 
-````Dart
+```Dart
 /// The widget that will be displayed as dragging widget
   final Widget child;
 
   /// The horizontal padding around the widget
-  final double horizontalSapce;
+  final double horizontalSpace;
 
   /// The vertical padding around the widget
   final double verticalSpace;
@@ -50,7 +50,7 @@ A flutter package which will help you to create a draggable widget that can be d
   final double shadowBorderRadius;
 
   /// A drag controller to show/hide or move the widget around the screen
-  final DragController dragController;
+  final DragController? dragController;
 
   /// [BoxShadow] when the widget is not being dragged, default to
   /// ```Dart
@@ -76,9 +76,9 @@ A flutter package which will help you to create a draggable widget that can be d
   /// How much should the [DraggableWidget] be scaled when it is being dragged, default to 1.1
   final double dragAnimationScale;
 
-````
+```
 
-**AnchoringPosition can be among these 4 types**
+### AnchoringPosition can be among these 4 types
 
 ```Dart
 enum AnchoringPosition {
@@ -90,41 +90,41 @@ enum AnchoringPosition {
 }
 ```
 
-**How to use**
+### How to use
 
 ```Dart
 Stack(
-    children:[
-        // other widgets...
-         DraggableWidget(
-            bottomMargin: 80,
-            topMargin: 80,
-            intialVisibility: true,
-            horizontalSapce: 20,
-            shadowBorderRadius: 50,
-            child: Container(
-              height: 100,
-              width: 100,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.blue,
-              ),
-            ),
-            initialPosition: AnchoringPosition.bottomLeft,
-            dragController: dragController,
-          )
-    ]
+  children:[
+    // other widgets...
+    DraggableWidget(
+      bottomMargin: 80,
+      topMargin: 80,
+      intialVisibility: true,
+      horizontalSpace: 20,
+      shadowBorderRadius: 50,
+      child: Container(
+        height: 100,
+        width: 100,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.blue,
+        ),
+      ),
+      initialPosition: AnchoringPosition.bottomLeft,
+      dragController: dragController,
+    ),
+  ],
 )
 ```
 
-**DragController Fucntionality**
+## DragController Functionality
 
 ```Dart
 /// Jump to any [AnchoringPosition] programatically
 void jumpTo(AnchoringPosition anchoringPosition)
 
-/// Get the current screen [Offset] of the widget
-Offset getCurrentPosition()
+/// Get the current screen [Offset?] of the widget
+Offset? getCurrentPosition()
 
 /// Makes the widget visible
 void showWidget()
@@ -133,4 +133,4 @@ void showWidget()
 void hideWidget()
 ```
 
-run the example app in the exmaple folder to find out more about how to use it.
+Run the example app in the exmaple folder to find out more about how to use it.
