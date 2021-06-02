@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -49,43 +49,43 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                FlatButton(
+                TextButton(
                   onPressed: () {
                     dragController.showWidget();
                   },
                   child: Text("Show"),
                 ),
-                FlatButton(
+                TextButton(
                   onPressed: () {
                     dragController.hideWidget();
                   },
                   child: Text("Hide"),
                 ),
-                FlatButton(
+                TextButton(
                   onPressed: () {
                     dragController.jumpTo(AnchoringPosition.topRight);
                   },
                   child: Text("Move to Top Right"),
                 ),
-                FlatButton(
+                TextButton(
                   onPressed: () {
                     dragController.jumpTo(AnchoringPosition.topLeft);
                   },
                   child: Text("Move to Top Left"),
                 ),
-                FlatButton(
+                TextButton(
                   onPressed: () {
                     dragController.jumpTo(AnchoringPosition.bottomRight);
                   },
                   child: Text("Move to bottom Right"),
                 ),
-                FlatButton(
+                TextButton(
                   onPressed: () {
                     dragController.jumpTo(AnchoringPosition.bottomLeft);
                   },
                   child: Text("Move to Bottom Left"),
                 ),
-                FlatButton(
+                TextButton(
                   onPressed: () {
                     dragController.jumpTo(AnchoringPosition.center);
                   },
