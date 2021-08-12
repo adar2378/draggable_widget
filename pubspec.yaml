@@ -1,6 +1,6 @@
 name: draggable_widget
 description: A flutter package which will help you to create a draggable widget that can be dragged around the screen.
-version: 1.1.1
+version: 2.0.0
 homepage: https://github.com/adar2378
 repository: https://github.com/adar2378/draggable_widget
 
