@@ -1,16 +1,92 @@
-# example
+# Example of draggable_widget package
 
-A new Flutter project.
+```Dart
+class MyHomePage extends StatelessWidget {
+  final dragController = DragController();
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: <Widget>[
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    dragController.showWidget();
+                  },
+                  child: Text("Show"),
+                ),
+                TextButton(
+                  onPressed: () {
+                    dragController.hideWidget();
+                  },
+                  child: Text("Hide"),
+                ),
+                TextButton(
+                  onPressed: () {
+                    dragController.jumpTo(AnchoringPosition.topRight);
+                  },
+                  child: Text("Move to Top Right"),
+                ),
+                TextButton(
+                  onPressed: () {
+                    dragController.jumpTo(AnchoringPosition.topLeft);
+                  },
+                  child: Text("Move to Top Left"),
+                ),
+                TextButton(
+                  onPressed: () {
+                    dragController.jumpTo(AnchoringPosition.bottomRight);
+                  },
+                  child: Text("Move to bottom Right"),
+                ),
+                TextButton(
+                  onPressed: () {
+                    dragController.jumpTo(AnchoringPosition.bottomLeft);
+                  },
+                  child: Text("Move to Bottom Left"),
+                ),
+                TextButton(
+                  onPressed: () {
+                    dragController.jumpTo(AnchoringPosition.center);
+                  },
+                  child: Text("Move to Center"),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            height: 80,
+            width: double.infinity,
+            color: Colors.green,
+          ),
+          DraggableWidget(
+            bottomMargin: 80,
+            topMargin: 80,
+            intialVisibility: true,
+            horizontalSpace: 20,
+            shadowBorderRadius: 50,
+            child: Container(
+              height: 100,
+              width: 200,
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Stack(
+                children: [
+                  IconButton(icon: Icon(Icons.close), onPressed: () {})
+                ],
+              ),
+            ),
+            initialPosition: AnchoringPosition.bottomLeft,
+            dragController: dragController,
+          )
+        ],
+      ),
+    );
+  }
+}
+```
