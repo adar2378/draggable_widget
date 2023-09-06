@@ -115,6 +115,9 @@ class _DraggableWidgetState extends State<DraggableWidget>
   double widgetHeight = 18;
   double widgetWidth = 50;
 
+  double middleAreaTop = 72;
+  double middleAreaLeft = 72;
+
   final key = GlobalKey();
 
   bool dragging = false;
@@ -167,6 +170,9 @@ class _DraggableWidgetState extends State<DraggableWidget>
           setState(() {
             widgetHeight = widgetSize.height;
             widgetWidth = widgetSize.width;
+
+            middleAreaLeft = MediaQuery.of(context).size.width * 0.1;
+            middleAreaTop = MediaQuery.of(context).size.height * 0.1;
           });
         }
 
@@ -183,11 +189,26 @@ class _DraggableWidgetState extends State<DraggableWidget>
             top = boundary - widgetHeight + widget.statusBarHeight;
             left = 0;
           } else if (widget.initialPosition == AnchoringPosition.topRight) {
-            top = widget.topMargin - widget.topMargin;
+            top = widget.topMargin;
             left = MediaQuery.of(context).size.width - widgetWidth;
-          } else {
+          } else if (widget.initialPosition == AnchoringPosition.topLeft) {
             top = widget.topMargin;
             left = 0;
+          } else if (widget.initialPosition == AnchoringPosition.topCenter) {
+            top = widget.topMargin;
+            left = MediaQuery.of(context).size.width / 2 - widgetWidth / 2;
+          } else if (widget.initialPosition == AnchoringPosition.bottomCenter) {
+            top = boundary - widgetHeight + widget.statusBarHeight;
+            left = MediaQuery.of(context).size.width / 2 - widgetWidth / 2;
+          } else if (widget.initialPosition == AnchoringPosition.leftCenter) {
+            top = MediaQuery.of(context).size.height / 2 - widgetHeight / 2;
+            left = 0;
+          } else if (widget.initialPosition == AnchoringPosition.rightCenter) {
+            top = MediaQuery.of(context).size.height / 2 - widgetHeight / 2;
+            left = MediaQuery.of(context).size.width - widgetWidth;
+          } else {
+            top = MediaQuery.of(context).size.height / 2 - widgetHeight / 2;
+            left = MediaQuery.of(context).size.width / 2 - widgetWidth / 2;
           }
         });
       });
@@ -321,14 +342,24 @@ class _DraggableWidgetState extends State<DraggableWidget>
     final double totalHeight = boundary;
     final double totalWidth = MediaQuery.of(context).size.width;
 
-    if (x <= totalWidth / 2 && y <= totalHeight / 2) {
+    if (x < totalWidth / 2 - middleAreaLeft && y < totalHeight / 2 - middleAreaTop) {
       return AnchoringPosition.topLeft;
-    } else if (x < totalWidth / 2 && y > totalHeight / 2) {
+    } else if (x < totalWidth / 2 - middleAreaLeft && y > totalHeight / 2 + middleAreaTop) {
       return AnchoringPosition.bottomLeft;
-    } else if (x > totalWidth / 2 && y < totalHeight / 2) {
+    } else if (x > totalWidth / 2 + middleAreaLeft && y < totalHeight / 2 - middleAreaTop) {
       return AnchoringPosition.topRight;
-    } else {
+    } else if (x > totalWidth / 2 + middleAreaLeft && y > totalHeight / 2 + middleAreaTop) {
       return AnchoringPosition.bottomRight;
+    } else if (x == x.clamp(totalWidth / 2 - middleAreaLeft, totalWidth / 2 + middleAreaLeft) && y < totalHeight / 2 - middleAreaTop) {
+      return AnchoringPosition.topCenter;
+    } else if (x == x.clamp(totalWidth / 2 - middleAreaLeft, totalWidth / 2 + middleAreaLeft) && y > totalHeight / 2 + middleAreaTop) {
+      return AnchoringPosition.bottomCenter;
+    } else if (x < totalWidth / 2 - middleAreaLeft && y == y.clamp(totalHeight / 2 - middleAreaTop, totalHeight / 2 + middleAreaTop)) {
+      return AnchoringPosition.leftCenter;
+    } else if (x > totalWidth / 2 + middleAreaLeft && y == y.clamp(totalHeight / 2 - middleAreaTop, totalHeight / 2 + middleAreaTop)) {
+      return AnchoringPosition.rightCenter;
+    } else {
+      return AnchoringPosition.center;
     }
   }
 
@@ -346,14 +377,13 @@ class _DraggableWidgetState extends State<DraggableWidget>
             top = ((1 - animation.value) * hardTop +
                 (widget.topMargin * (animation.value)));
           }
-
           currentlyDocked = AnchoringPosition.topLeft;
         });
         break;
       case AnchoringPosition.topRight:
-        double remaingDistanceX = (totalWidth - widgetWidth - hardLeft);
+        double remainingDistanceX = (totalWidth - widgetWidth - hardLeft);
         setState(() {
-          left = hardLeft + (animation.value) * remaingDistanceX;
+          left = hardLeft + (animation.value) * remainingDistanceX;
           if (animation.value == 0) {
             top = hardTop;
           } else {
@@ -364,37 +394,82 @@ class _DraggableWidgetState extends State<DraggableWidget>
         });
         break;
       case AnchoringPosition.bottomLeft:
-        double remaingDistanceY = (totalHeight - widgetHeight - hardTop);
+        double remainingDistanceY = (totalHeight - widgetHeight - hardTop);
         setState(() {
           left = (1 - animation.value) * hardLeft;
           top = hardTop +
-              (animation.value) * remaingDistanceY +
+              (animation.value) * remainingDistanceY +
               (widget.statusBarHeight * animation.value);
           currentlyDocked = AnchoringPosition.bottomLeft;
         });
         break;
       case AnchoringPosition.bottomRight:
-        double remaingDistanceX = (totalWidth - widgetWidth - hardLeft);
-        double remaingDistanceY = (totalHeight - widgetHeight - hardTop);
+        double remainingDistanceX = (totalWidth - widgetWidth - hardLeft);
+        double remainingDistanceY = (totalHeight - widgetHeight - hardTop);
         setState(() {
-          left = hardLeft + (animation.value) * remaingDistanceX;
+          left = hardLeft + (animation.value) * remainingDistanceX;
           top = hardTop +
-              (animation.value) * remaingDistanceY +
+              (animation.value) * remainingDistanceY +
               (widget.statusBarHeight * animation.value);
           currentlyDocked = AnchoringPosition.bottomRight;
         });
         break;
       case AnchoringPosition.center:
-        double remaingDistanceX =
+        double remainingDistanceX =
             (totalWidth / 2 - (widgetWidth / 2)) - hardLeft;
-        double remaingDistanceY =
+        double remainingDistanceY =
             (totalHeight / 2 - (widgetHeight / 2)) - hardTop;
-        // double remaingDistanceX = (totalWidth - widgetWidth - hardLeft) / 2.0;
-        // double remaingDistanceY = (totalHeight - widgetHeight - hardTop) / 2.0;
+        // double remainingDistanceX = (totalWidth - widgetWidth - hardLeft) / 2.0;
+        // double remainingDistanceY = (totalHeight - widgetHeight - hardTop) / 2.0;
         setState(() {
-          left = (animation.value) * remaingDistanceX + hardLeft;
-          top = (animation.value) * remaingDistanceY + hardTop;
+          left = (animation.value) * remainingDistanceX + hardLeft;
+          top = (animation.value) * remainingDistanceY + hardTop;
           currentlyDocked = AnchoringPosition.center;
+        });
+        break;
+      case AnchoringPosition.topCenter:
+        double remainingDistanceX =
+            (totalWidth / 2 - (widgetWidth / 2)) - hardLeft;
+        setState(() {
+          left = (animation.value) * remainingDistanceX + hardLeft;
+          if (animation.value == 0) {
+            top = hardTop;
+          } else {
+            top = ((1 - animation.value) * hardTop +
+                (widget.topMargin * (animation.value)));
+          }
+          currentlyDocked = AnchoringPosition.topCenter;
+        });
+        break;
+      case AnchoringPosition.bottomCenter:
+        double remainingDistanceX =
+            (totalWidth / 2 - (widgetWidth / 2)) - hardLeft;
+        double remainingDistanceY = (totalHeight - widgetHeight - hardTop);
+        setState(() {
+          left = (animation.value) * remainingDistanceX + hardLeft;
+          top = hardTop +
+              (animation.value) * remainingDistanceY +
+              (widget.statusBarHeight * animation.value);
+        });
+        currentlyDocked = AnchoringPosition.bottomCenter;
+        break;
+      case AnchoringPosition.leftCenter:
+        double remainingDistanceY =
+            (totalHeight / 2 - (widgetHeight / 2)) - hardTop;
+        setState(() {
+          left = (1 - animation.value) * hardLeft;
+          top = (animation.value) * remainingDistanceY + hardTop;
+          currentlyDocked = AnchoringPosition.leftCenter;
+        });
+        break;
+      case AnchoringPosition.rightCenter:
+        double remainingDistanceX = (totalWidth - widgetWidth - hardLeft);
+        double remainingDistanceY =
+            (totalHeight / 2 - (widgetHeight / 2)) - hardTop;
+        setState(() {
+          left = hardLeft + (animation.value) * remainingDistanceX;
+          top = (animation.value) * remainingDistanceY + hardTop;
+          currentlyDocked = AnchoringPosition.rightCenter;
         });
         break;
       default:
