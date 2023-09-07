@@ -22,7 +22,7 @@ class DraggableWidget extends StatefulWidget {
   final AnchoringPosition initialPosition;
 
   /// Intially should the widget be visible or not, default to [true]
-  final bool intialVisibility;
+  final bool initialVisibility;
 
   /// The top bottom pargin to create the bottom boundary for the widget, for example if you have a [BottomNavigationBar],
   /// then you may need to set the bottom boundary so that the draggable button can't get on top of the [BottomNavigationBar]
@@ -74,7 +74,7 @@ class DraggableWidget extends StatefulWidget {
     this.horizontalSpace = 0,
     this.verticalSpace = 0,
     this.initialPosition = AnchoringPosition.bottomRight,
-    this.intialVisibility = true,
+    this.initialVisibility = true,
     this.bottomMargin = 0,
     this.topMargin = 0,
     this.statusBarHeight = 24,
@@ -126,7 +126,7 @@ class _DraggableWidgetState extends State<DraggableWidget>
 
   bool? visible;
 
-  bool get currentVisibilty => visible ?? widget.intialVisibility;
+  bool get currentVisibility => visible ?? widget.initialVisibility;
 
   bool isStillTouching = false;
 
@@ -257,7 +257,7 @@ class _DraggableWidgetState extends State<DraggableWidget>
             child: child,
           );
         },
-        child: !currentVisibilty
+        child: !currentVisibility
             ? Container()
             : Listener(
                 onPointerUp: (v) {

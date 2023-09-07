@@ -107,7 +107,7 @@ class MyHomePage extends StatelessWidget {
           DraggableWidget(
             bottomMargin: 40,
             topMargin: 80,
-            intialVisibility: true,
+            initialVisibility: true,
             horizontalSpace: 0,
             shadowBorderRadius: 50,
             child: Container(
